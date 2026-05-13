@@ -18,7 +18,6 @@ def get_db():
 
 
 def init_db():
-    print("Initializing database...")
     conn = get_db()
     conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -83,7 +82,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        print (f"Attempting login with username: {username} and password: {password}")
+
         # B608: SQL injection via string concatenation
         query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'"
         conn = get_db()
