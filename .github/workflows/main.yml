@@ -1,0 +1,34 @@
+name: OWASP ZAP DAST scan
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  zap:
+    name: zap/baseline-scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and start Flask app
+        run: |
+          docker build -t vuln-flask-app ./app
+          docker run -d --name flask-app -p 5000:5000 vuln-flask-app
+
+      - name: Wait for app to be ready
+        run: |
+          for i in {1..10}; do
+            curl -s http://localhost:5000 && break
+            sleep 3
+          done
+
+      - name: ZAP baseline scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: "http://localhost:5000"
+          fail_action: false
