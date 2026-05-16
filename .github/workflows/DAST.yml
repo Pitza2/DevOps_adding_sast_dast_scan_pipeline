@@ -33,3 +33,15 @@ jobs:
         uses: zaproxy/action-af@v0.3.0
         with:
           plan: ".github/zap.yml"
+
+      - name: Print ZAP Summary to Logs & Pipeline Dashboard
+        if: always() # Ensures logs & reports publish even if the scan failed/blocked the run
+        run: |
+          if [ -f zap-summary.md ]; then
+            # This renders the report beautifully right on your GitHub summary page
+            cat zap-summary.md >> $GITHUB_STEP_SUMMARY
+            # This dumps the text directly into the console logs
+            cat zap-summary.md
+          else
+            echo "ZAP summary file not found."
+          fi
