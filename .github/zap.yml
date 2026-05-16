@@ -10,8 +10,8 @@ env:
         method: "form"
         parameters:
           loginPageUrl: "http://localhost:5000/"
-          loginRequestData: "username=admin&password=password123"
-          loginPagePostUrl: "http://localhost:5000/"
+          loginRequestUrl: "http://localhost:5000/"  # Fixed: Tells ZAP exactly where to POST login details
+          loginRequestBody: "username={%username%}&password={%password%}" # Fixed: Uses proper injection tokens
         verification:
           method: "response"
           loggedInRegex: "Welcome"
@@ -31,7 +31,6 @@ jobs:
       user: "admin"
       maxDuration: 2
 
-  # Added this mandatory job to handle passive scan rule mapping
   - type: passiveScan-config
     parameters:
       maxAlertsPerRule: 10

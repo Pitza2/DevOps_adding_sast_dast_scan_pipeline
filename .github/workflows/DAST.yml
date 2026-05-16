@@ -32,4 +32,4 @@ jobs:
         # Switched to the modern action designed for your YAML file
         uses: zaproxy/action-af@v0.3.0
         with:
-          plan: ".github/workflows/zap.yml"
+          plan: ".github/zap.yml"
