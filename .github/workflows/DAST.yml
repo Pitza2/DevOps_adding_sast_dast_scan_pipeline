@@ -32,6 +32,6 @@ jobs:
           target: "http://localhost:5000"
           fail_action: false
           issue_title: ""
-          cmd_options: "-z '-config scanner.attackStrength=HIGH'"
+          cmd_options: "-z -config scanner.attackStrength=HIGH"
           # use the automation framework config
-          autoconf: ".github/zap.conf"
+          rules_file_name: ".github/zap.conf"
