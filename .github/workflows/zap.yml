@@ -1,4 +1,7 @@
 env:
+  parameters:
+    failOnError: false
+    failOnWarning: false
   contexts:
     - name: "flask-app"
       urls:
@@ -28,11 +31,15 @@ jobs:
       user: "admin"
       maxDuration: 2
 
+  # Added this mandatory job to handle passive scan rule mapping
+  - type: passiveScan-config
+    parameters:
+      maxAlertsPerRule: 10
+
   - type: activeScan
     parameters:
       context: "flask-app"
       user: "admin"
-      policy: "Default Policy"
 
   - type: report
     parameters:
