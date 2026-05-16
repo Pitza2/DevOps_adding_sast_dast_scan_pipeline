@@ -26,14 +26,15 @@ jobs:
             curl -s http://localhost:5000 && break
             sleep 3
           done
+      - name: ZAP full authenticated scan
+        uses: zaproxy/action-full-scan@v0.11.0
+        with:
+          target: "http://localhost:5000"
+          fail_action: false
+          issue_title: ""
+          cmd_options: "-z '-config scanner.attackStrength=HIGH'"
+          rules_file_name: ".github/zap/rules.tsv"
+          # use the automation framework config
+          autoconf: ".github/zap/auth.conf"
 
-    name: ZAP full authenticated scan
-    uses: zaproxy/action-full-scan@v0.11.0
-    with:
-      target: "http://localhost:5000"
-      fail_action: false
-      issue_title: ""
-      cmd_options: "-z '-config scanner.attackStrength=HIGH'"
-      rules_file_name: ".github/zap/rules.tsv"
-      # use the automation framework config
-      autoconf: ".github/zap.conf"
+
