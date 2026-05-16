@@ -45,3 +45,14 @@ jobs:
       template: "traditional-html"
       reportDir: "/zap/wrk"
       reportFile: "zap-report"
+
+  - type: report
+    parameters:
+      template: "traditional-md"
+      reportDir: "/zap/wrk"
+      reportFile: "zap-summary"
+
+  - type: exitStatus
+    parameters:
+      errorLevel: "High" # Options: Informational, Low, Medium, High
+      errorExitValue: 1
